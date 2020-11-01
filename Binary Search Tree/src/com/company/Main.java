@@ -23,7 +23,8 @@ public class Main {
         System.out.println( Tree.findNode( "Q",Tree.root() ).getElement() );
 
         //Could not find T so we display the element of the node
-        //that would be T's parent, if T was in the Tree
+        //that would be T's parent, if T was in the Tree. In our
+        //case it's R
         System.out.println( Tree.findNode( "T",Tree.root() ).getElement() );
     }
 }
