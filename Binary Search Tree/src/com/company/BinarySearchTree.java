@@ -125,10 +125,12 @@ public class BinarySearchTree{
                 return temp1;
 
             }
-            BTNode rightSubtree = delNode.getRight(), temp2, delParent;
+            BTNode  temp2, delParent;
 
-            while ((temp2 = rightSubtree.getLeft()) != null) {
-                rightSubtree = temp2;
+            temp2 = delNode.getRight();
+
+            while ((temp2 != null) && temp2.getLeft()!= null) {
+                temp2 = temp2.getLeft();
             }
 
             exchangeElemnts(temp2, delNode);
@@ -191,5 +193,39 @@ public class BinarySearchTree{
         a.setElement(b.getElement());
         b.setElement(temp);
 
+    }
+
+    public BTNode findSuccessor(BTNode a){
+
+
+        BTNode rightSubtree = a.getRight(), temp2;
+        if (rightSubtree == null)
+            return a;
+        if(rightSubtree.getLeft() == null){
+            return rightSubtree;
+        }
+        temp2 = a.getRight();
+
+        while ((temp2 != null) && temp2.getLeft()!= null) {
+            temp2 = temp2.getLeft();
+        }
+        return temp2;
+    }
+
+    public BTNode findPredecessor(BTNode a){
+
+
+        BTNode leftSubtree = a.getLeft(), temp2;
+        if (leftSubtree == null)
+            return a;
+        if(leftSubtree.getLeft() == null){
+            return leftSubtree;
+        }
+        temp2 = a.getLeft();
+
+        while ((temp2 != null) && temp2.getRight()!= null) {
+            temp2 = temp2.getRight();
+        }
+        return temp2;
     }
 }
