@@ -149,9 +149,9 @@ public class BinarySearchTree{
     public void deleteNode(BTNode delNode){
         if (isRoot(delNode)) {
             BTNode child = (delNode.getLeft() != null ? delNode.getLeft() : delNode.getRight());
-            delNode = child;
-            if (delNode.getParent() != null) {
-                delNode.setParent(null);
+            root = child;
+            if (root.getParent() != null) {
+                root.setParent(null);
             }
         }
         else {
