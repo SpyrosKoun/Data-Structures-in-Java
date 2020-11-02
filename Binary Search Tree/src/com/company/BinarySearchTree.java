@@ -30,8 +30,9 @@ public class BinarySearchTree{
     //and if its less we go to the left child of the node.                          / \                  arrow indicates. But its not in
     //If the key that we are searching for does not exist in                          B   R                 our tree so the function returns
     //the tree we return the node that would be the parent of                            / \                the node that should have been T's
-    //the node that we are searching for.                                               n   n <---          parent.
-    public BTNode findNode (String insString,BTNode v){
+    //the node that we are searching for if option is true                              n   n <---          parent.
+    // or null if option is false
+    public BTNode findNode (String insString,BTNode v,boolean option){
 
         //Getting the element of the node that we are
         //in so we can compare it to our searching word
@@ -40,9 +41,12 @@ public class BinarySearchTree{
         //String is greater than the current element -->Right
         if( insString.compareTo(nodeString) > 0 ){
             if (v.getRight() == null){
-                return v;
-            }else{
-                return findNode(insString,v.getRight());
+                if (option)
+                    return v;
+                return null;
+            }
+            else{
+                return findNode(insString,v.getRight(),option);
             }
         }
         //String is equal to the current element
@@ -52,9 +56,12 @@ public class BinarySearchTree{
         //String is less than the current element -->Left
         else{
             if (v.getLeft() == null){
-                return v;
-            }else{
-                return findNode(insString,v.getLeft());
+                if (option)
+                    return v;
+                return null;
+            }
+            else{
+                return findNode(insString,v.getLeft(),option);
             }
 
         }
@@ -76,7 +83,7 @@ public class BinarySearchTree{
         //Trying to find if it already exists in the tree.
         //If it doesnt exist, we get the supposed parent as
         //explained in the findNode function above
-        BTNode insNode = findNode(insString,root());
+        BTNode insNode = findNode(insString,root(),true);
         String stringNode = insNode.getElement();
 
 
@@ -110,33 +117,31 @@ public class BinarySearchTree{
         if (size() == 0)
             return null;
 
-        BTNode delNode = findNode(delString,root());
+        BTNode delNode = findNode(delString,root(),true);
         String stringNode = delNode.getElement();
 
-        if (delString.compareTo(stringNode) != 0){          //Node with element delString does not exist
-            return null;
+        if(delNode != null) {//Node with element delString does not exist
+                BTNode temp1;
+                if ((delNode.getRight() == null) || (delNode.getLeft() == null)) {
+
+                    temp1 = (delNode.getLeft() != null ? delNode.getLeft() : delNode.getRight() != null ? delNode.getRight() : delNode.getParent());
+                    deleteNode(delNode);
+                    return temp1;
+
+                }
+
+                BTNode temp2, delParent;
+
+                temp2 = findSuccessor(delNode);
+
+                exchangeElemnts(temp2, delNode);
+                delNode.setRight(temp2.getRight());
+                delParent = temp2.getParent();
+                deleteNode(temp2);
+                return delParent;
         }
-        else {
-            BTNode temp1;
-            if ((delNode.getRight() == null) || (delNode.getLeft() == null)) {
-
-                temp1 = (delNode.getLeft() != null ? delNode.getLeft() : delNode.getRight() != null ? delNode.getRight() : delNode.getParent());
-                deleteNode(delNode);
-                return temp1;
-
-            }
-            BTNode  temp2, delParent;
-
-            temp2 = delNode.getRight();
-
-            while ((temp2 != null) && temp2.getLeft()!= null) {
-                temp2 = temp2.getLeft();
-            }
-
-            exchangeElemnts(temp2, delNode);
-            delParent = temp2.getParent();
-            deleteNode(temp2);
-            return delParent;
+        else{
+            return null;
         }
 
 
@@ -148,16 +153,18 @@ public class BinarySearchTree{
             if (delNode.getParent() != null) {
                 delNode.setParent(null);
             }
-        } else {
+        }
+        else {
             BTNode delParent = delNode.getParent();
+
             BTNode child = (delNode.getLeft() != null ? delNode.getLeft() : delNode.getRight());
-            if (delParent.getLeft() != null) {
-                if (delParent.getLeft().getElement().compareTo(delNode.getElement()) == 0)
-                    delParent.setLeft(child);
-            } else {
-                delParent.setRight(child);
+            if ((delParent.getRight() != null) && (delParent.getRight().getElement().compareTo(delNode.getElement()) == 0)) {
+                    delParent.setRight(child);
             }
-            if (child !=null)
+            else if ((delParent.getLeft() != null) && (delParent.getLeft().getElement().compareTo(delNode.getElement()) == 0)){
+                    delParent.setLeft(child);
+            }
+            if (child != null)
                 child.setParent(delParent);
         }
         size--;
@@ -188,6 +195,7 @@ public class BinarySearchTree{
         return (o == root);
     }
 
+    //This is a function to exchange elements between 2 nodes
     public void exchangeElemnts(BTNode a,BTNode b){
         String temp = a.getElement();
         a.setElement(b.getElement());
@@ -195,6 +203,7 @@ public class BinarySearchTree{
 
     }
 
+    //Function to find the inorder successor of a node
     public BTNode findSuccessor(BTNode a){
 
 
@@ -212,6 +221,7 @@ public class BinarySearchTree{
         return temp2;
     }
 
+    //Function to find the inorder predecessor of a node
     public BTNode findPredecessor(BTNode a){
 
 

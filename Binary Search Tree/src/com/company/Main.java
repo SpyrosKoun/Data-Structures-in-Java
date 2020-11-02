@@ -9,6 +9,7 @@ public class Main {
         BinarySearchTree Tree = new BinarySearchTree();
 
 
+        //Adding various letters to form a Binary Search Tree
         Tree.addNode("K");
         Tree.addNode("F");
         Tree.addNode("Q");
@@ -24,17 +25,21 @@ public class Main {
         Tree.addNode("W");
         Tree.addNode("R");
         Tree.addNode("T");
-        //Tree.deleteString("V");
 
-        //Could find Q so its element is displayed
-        System.out.println( Tree.findNode( "Q",Tree.root() ).getElement() );
+        //Deleting some nodes with no kids, one kid or two kids
+        Tree.deleteString("S");
+        Tree.deleteString("Y");
+        Tree.deleteString("K");
+        Tree.deleteString("F");
+        Tree.deleteString("Q");
 
-        //Could not find T so we display the element of the node
-        //that would be T's parent, if T was in the Tree. In our
-        //case it's R
-        System.out.println( Tree.findNode( "V",Tree.root() ).getElement() );
-
-        System.out.println(Tree.findSuccessor( Tree.findNode("V",Tree.root() ) ).getElement());
-        System.out.println(Tree.findPredecessor( Tree.findNode("V",Tree.root() ) ).getElement());
+        try {
+            System.out.println( Tree.findNode( "T",Tree.root(),false ).getElement() );
+            System.out.println( Tree.findNode( "Q",Tree.root(),false).getElement() );
+            System.out.println(Tree.findSuccessor(Tree.findNode("Q", Tree.root(), false)).getElement());
+        }
+        catch (NullPointerException e){
+            System.out.println("Element does not exist in the Binary Search Tree");
+        }
     }
 }
