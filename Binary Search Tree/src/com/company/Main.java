@@ -8,7 +8,6 @@ public class Main {
         and its methods.*/
         BinarySearchTree Tree = new BinarySearchTree();
 
-
         //Adding various letters to form a Binary Search Tree
         Tree.addNode("K");
         Tree.addNode("F");
@@ -39,6 +38,7 @@ public class Main {
             System.out.println(Tree.findSuccessor(Tree.findNode("Q", Tree.root(), false)).getElement());
         }
         catch (NullPointerException e){
+            System.out.println("Error occurred.Function findNode returned null.");
             System.out.println("Element does not exist in the Binary Search Tree");
         }
     }
