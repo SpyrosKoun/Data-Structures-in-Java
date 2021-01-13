@@ -1,5 +1,4 @@
-package com.company;
-
+package BST;
 
 public class BTNode {
     private BTNode Parent,Left,Right;
@@ -11,12 +10,20 @@ public class BTNode {
 
     }
 
+    public BTNode(String element, int duplicates){
+        this.element = element;
+        this.duplicates = duplicates;
+        this.Parent = null;
+        this.Right = null;
+        this.Left = null;
+    }
+
     public BTNode(String element,int duplicates,BTNode parent,BTNode right,BTNode left){
-        setElement(element);
-        setLeft(left);
-        setParent(parent);
-        setRight(right);
-        setDuplicates(duplicates);
+        this.element = element;
+        this.duplicates = duplicates;
+        this.Parent = parent;
+        this.Right = right;
+        this.Left = left;
     }
 
     public BTNode getLeft() {

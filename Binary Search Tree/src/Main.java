@@ -1,4 +1,4 @@
-package com.company;
+import BST.BinarySearchTree;
 
 public class Main {
 

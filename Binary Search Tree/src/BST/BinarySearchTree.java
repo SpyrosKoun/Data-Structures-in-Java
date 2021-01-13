@@ -1,4 +1,4 @@
-package com.company;
+package BST;
 
 public class BinarySearchTree{
     private BTNode root;
