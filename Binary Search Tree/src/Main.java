@@ -1,4 +1,5 @@
 import BST.BinarySearchTree;
+import BST.Stack;
 
 public class Main {
 
@@ -41,5 +42,20 @@ public class Main {
             System.out.println("Error occurred.Function findNode returned null.");
             System.out.println("Element does not exist in the Binary Search Tree");
         }
+
+
+        Stack stack = new Stack();
+
+        stack.push(5);
+        stack.push(2);
+        stack.push(35);
+        stack.push(425);
+        stack.push(25);
+
+        stack.printStack();
+        System.out.println("--");
+        stack.pop();
+
+        stack.printStack();
     }
 }
